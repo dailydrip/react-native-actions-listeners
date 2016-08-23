@@ -1,31 +1,48 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableHighlight,
   View
 } from 'react-native';
 
 class actionsListeners extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {result: '' };
+    this.guessNumber = this.guessNumber.bind(this);
+  }
+
+  guessNumber(){
+    let number = parseInt(this.refs.number._lastNativeText)
+    let result = Math.abs(number % 2) == 1 ? "ODD" : "EVEN";
+    this.setState({result})
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
+        <Text style={styles.guess}>
+          Guess the number!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+
+        <TextInput
+          ref="number"
+          style={styles.inputNumber}
+        />
+
+        <TouchableHighlight
+          onPress={this.guessNumber}>
+          <Text style={styles.button}>
+            GUESS
+          </Text>
+        </TouchableHighlight>
+
+      <Text style={styles.resultArea}>
+        {this.state.result}
+      </Text>
       </View>
     );
   }
@@ -38,15 +55,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
+  inputNumber:{
+    height: 40,
     textAlign: 'center',
-    margin: 10,
+    borderColor: 'gray',
+    borderWidth: 1
   },
-  instructions: {
+  button: {
+    padding: 20,
+    margin: 5,
+    fontSize: 20,
+    borderRadius: 4,
+    backgroundColor: '#1155DD'
+  },
+  guess: {
+    fontSize: 30,
+    textAlign: 'center',
+  },
+  resultArea: {
     textAlign: 'center',
     color: '#333333',
-    marginBottom: 5,
+    fontSize: 20,
+    marginTop: 30,
   },
 });
 
